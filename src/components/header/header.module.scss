@@ -1,0 +1,116 @@
+.header {
+  display: block;
+  width: 100%;
+  height: 80px;
+  padding: 1rem 22px;
+  background: #FFFFFF;
+  margin-bottom: 26px;
+
+  &__content {
+    @extend %flex;
+    justify-content: space-between;
+
+    .logo {
+      cursor: pointer;
+    }
+
+    .header-content-list {
+      position: relative;
+      @extend %flex;
+
+      button {
+        margin-left: 27px;
+        cursor: pointer;
+      }
+
+      .sign-in-btn {
+        width: 109px;
+        height: 51px;
+        text-align: center;
+        border-radius: 5px;
+        border: 1px solid transparent;
+
+        &:active,
+        &:focus {
+          border: 1px solid #52C41A;
+          color: #52C41A;
+        }
+      }
+
+      .sign-up-btn {
+        width: 109px;
+        height: 51px;
+        text-align: center;
+        border-radius: 5px;
+        border: 1px solid transparent;
+
+        &:active,
+        &:focus {
+          border: 1px solid #52C41A;
+          color: #52C41A;
+        }
+
+      }
+
+      .create-article-btn {
+        display: none;
+
+        padding: 6px 10px;
+
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22px;
+        text-align: center;
+
+        border-radius: 5px;
+        border: 1px solid #52C41A;
+        color: #52C41A;
+      }
+
+      .profile-btn {
+        display: none;
+        gap: 13px;
+
+        .avatar {
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+        }
+      }
+
+      .log-out-btn {
+        display: none;
+        justify-content: center;
+        width: 109px;
+        height: 51px;
+        border-radius: 5px;
+        border: 1px solid rgba(0, 0, 0, 0.75);
+
+        &:active,
+        &:focus {
+          border: 1px solid #52C41A;
+          color: #52C41A;
+        }
+      }
+
+      &--auth {
+        .sign-in-btn,
+        .sign-up-btn {
+          display: none;
+        }
+
+        .create-article-btn,
+        .profile-btn,
+        .log-out-btn {
+          @extend %flex;
+        }
+      }
+    }
+  }
+}
+
+%flex {
+  display: flex;
+  align-items: center;
+}

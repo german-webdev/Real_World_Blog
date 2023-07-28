@@ -1,0 +1,17 @@
+.spinner {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  
+  transform: scale(2);
+  z-index: 10000;
+}
+
+.spinner-in {
+  color: red;
+  border-color: brown;
+}
+
+.ant-spin.spin {
+  color: #ff0000; /* Replace #ff0000 with your desired color */
+}
