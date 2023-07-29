@@ -16,13 +16,15 @@
   margin-inline: auto;
 
   background: #EBEEF3;
-
+  box-shadow: 
+    -3px 0 15px -10px #c3c6cc,
+    3px 0 15px -10px #c3c6cc;
   opacity: 1;
 
   transition: opacity 0.1s ease-out;
 
   &--loading {
-    opacity: 0.1;
+    opacity: 0.2;
     transition: opacity 0.1s ease-in;
   }
 
