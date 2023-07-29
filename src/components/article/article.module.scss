@@ -4,7 +4,7 @@
   max-width: 941px;
   min-height: 140px;
   
-  margin: 0 auto;
+  margin-inline: auto;
   padding: 15px 14px 24px 19px;
 
   background: #FFFFFF;
@@ -44,6 +44,7 @@
 
       &__tags {
         display: flex;
+        flex-wrap: wrap;
         gap: 8px;
 
         .tag {

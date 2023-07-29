@@ -13,7 +13,7 @@ export const registrationUser = createAsyncThunk('user/registrationUser', async 
     localStorage.setItem('token', token);
     return otherProps;
   } catch (error) {
-    console.log(rejectWithValue(error.response.data));
+    console.debug(rejectWithValue(error.response.data));
     return rejectWithValue(error.response.data);
   }
 });
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk('user/loginUser', async (data, { rejec
     localStorage.setItem('token', token);
     return otherProps;
   } catch (error) {
-    console.log(rejectWithValue(error.response.data));
+    console.debug(rejectWithValue(error.response.data));
     return rejectWithValue(error.response.data);
   }
 });
@@ -39,7 +39,7 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (data,
     localStorage.setItem('token', token);
     return otherProps;
   } catch (error) {
-    console.log(rejectWithValue(error.response.data));
+    console.debug(rejectWithValue(error.response.data));
     return rejectWithValue(error.response.data);
   }
 });

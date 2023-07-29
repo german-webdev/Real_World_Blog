@@ -8,6 +8,7 @@ import ArticleForm from '../article-form';
 const NewArticlePage = () => {
   const { articleStatus } = useSelector((state) => state.articles);
   const { submitted } = useSelector((state) => state.settings);
+  const { auth } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -15,6 +16,9 @@ const NewArticlePage = () => {
     if (articleStatus !== 'rejected' && submitted) {
       history.push('/articles');
       dispatch(checkSubmitted(false));
+    }
+    if (!auth) {
+      history.push('/articles');
     }
   }, [articleStatus, history, dispatch, submitted]);
 

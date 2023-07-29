@@ -1,20 +1,24 @@
 /* eslint-disable dot-notation */
-import { Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+
+import { setLike, setUnlike } from '../../store/slices/articles-slice';
 
 import classes from './article-likes.module.scss';
 
-const Likes = ({ likes, favorited }) => {
+const Likes = ({ likes, favorited, slug }) => {
+  const { auth } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   return (
     <>
       {favorited ? (
-        <span className={classes['like']} role="button" tabIndex="0">
+        <button onClick={() => auth && dispatch(setUnlike(slug))} className={classes['like']} type="button">
           <HeartFilled style={{ color: '#FF0707' }} />
-        </span>
+        </button>
       ) : (
-        <span className={classes['like']} role="button" tabIndex="0">
+        <button onClick={() => auth && dispatch(setLike(slug))} className={classes['like']} type="button">
           <HeartOutlined style={{ color: 'rgba(0, 0, 0, 0.75)' }} />
-        </span>
+        </button>
       )}
 
       <span className={classes['like-counter']}>{likes}</span>

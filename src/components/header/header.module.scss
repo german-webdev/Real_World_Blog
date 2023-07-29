@@ -16,94 +16,123 @@
 
     .header-content-list {
       position: relative;
-      @extend %flex;
 
-      button {
-        margin-left: 27px;
-        cursor: pointer;
-      }
+      .log-in-box {
+        @extend %flex;
+        gap: 27px;
 
-      .sign-in-btn {
-        width: 109px;
-        height: 51px;
-        text-align: center;
-        border-radius: 5px;
-        border: 1px solid transparent;
+        button:not(.profile-btn) {
+          cursor: pointer;
+          border: 1px solid transparent;
+          border-radius: 5px;
+          text-align: center;
 
-        &:active,
-        &:focus {
-          border: 1px solid #52C41A;
-          color: #52C41A;
-        }
-      }
+          outline: 1px solid transparent;
+          transition: all 0.1s ease-in-out;
 
-      .sign-up-btn {
-        width: 109px;
-        height: 51px;
-        text-align: center;
-        border-radius: 5px;
-        border: 1px solid transparent;
+          &.create-article-btn {
+            padding: 3px 8px;
+    
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 22px;
+            text-align: center;
 
-        &:active,
-        &:focus {
-          border: 1px solid #52C41A;
-          color: #52C41A;
-        }
+            border: 1px solid #52C41A;
+            color: #52C41A;
+          }
 
-      }
+          &.log-out-btn {
+            justify-content: center;
+            width: 109px;
+            height: 51px;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, 0.75);
+          }
+                    
+          &:focus {
+            border: 1px solid #52C41A;
+            color: #52C41A;
+          }
 
-      .create-article-btn {
-        display: none;
+          &:active {
+            transform: scale(0.98);
+          }
 
-        padding: 6px 10px;
+          &:hover {
+            border: 0;
+            background: #52C41A;
+            color: #FFFFFF;
+            outline: 1px solid #52C41A;
+            outline-offset: 5px;
 
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 22px;
-        text-align: center;
+            transition: all 0.1s ease-in-out;
+          }
 
-        border-radius: 5px;
-        border: 1px solid #52C41A;
-        color: #52C41A;
-      }
-
-      .profile-btn {
-        display: none;
-        gap: 13px;
-
-        .avatar {
-          width: 46px;
-          height: 46px;
-          border-radius: 50%;
-        }
-      }
-
-      .log-out-btn {
-        display: none;
-        justify-content: center;
-        width: 109px;
-        height: 51px;
-        border-radius: 5px;
-        border: 1px solid rgba(0, 0, 0, 0.75);
-
-        &:active,
-        &:focus {
-          border: 1px solid #52C41A;
-          color: #52C41A;
-        }
-      }
-
-      &--auth {
-        .sign-in-btn,
-        .sign-up-btn {
-          display: none;
+          &:active {
+            outline-offset: 1px;
+            transform: scale(0.95);
+          }
         }
 
+        .profile-btn {
+          gap: 13px;
+  
+          .avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+          }
+        }
+  
         .create-article-btn,
         .profile-btn,
         .log-out-btn {
           @extend %flex;
+        }
+      }
+
+      .log-out-box {
+        @extend %flex;
+        gap: 18px;
+
+        button {
+          cursor: pointer;
+          border: 1px solid transparent;
+          border-radius: 5px;
+          text-align: center;
+
+          outline: 1px solid transparent;
+          transition: all 0.1s ease-in-out;
+
+          &.sign-in-btn,
+          &.sign-up-btn {
+            justify-content: center;
+            width: 109px;
+            height: 51px;
+            border-radius: 5px;
+
+            &--active {
+              border: 1px solid #52C41A;
+              color: #52C41A;
+            }
+          }
+  
+          &:hover {
+            border: 0;
+            background: #52C41A;
+            color: #FFFFFF;
+            outline: 1px solid #52C41A;
+            outline-offset: 5px;
+
+            transition: all 0.1s ease-in-out;
+          }
+
+          &:active {
+            outline-offset: 1px;
+            transform: scale(0.95);
+          }
         }
       }
     }

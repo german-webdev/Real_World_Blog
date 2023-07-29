@@ -37,8 +37,18 @@ export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (s
   return response.data;
 });
 
-export const editArticle = createAsyncThunk('articles/editArticle', async (slug, data) => {
-  const response = await articleService.editArticle(slug, data);
+export const editArticle = createAsyncThunk('articles/editArticle', async ({ data, slug }) => {
+  const response = await articleService.editArticle(data, slug);
+  return response.data;
+});
+
+export const setLike = createAsyncThunk('articles/setLike', async (slug) => {
+  const response = await articleService.addLike(slug);
+  return response.data;
+});
+
+export const setUnlike = createAsyncThunk('articles/setUnlike', async (slug) => {
+  const response = await articleService.deleteLike(slug);
   return response.data;
 });
 
@@ -121,6 +131,7 @@ const articleSlice = createSlice({
         state.article = {};
       })
       .addCase(deleteArticle.rejected, setError)
+
       /* editArticle */
       .addCase(editArticle.pending, setLoading)
       .addCase(editArticle.fulfilled, (state, { payload }) => {
@@ -128,6 +139,42 @@ const articleSlice = createSlice({
         state.article = payload.article;
       })
       .addCase(editArticle.rejected, (state, { error }) => {
+        state.articleStatus = 'rejected';
+        state.errorMessage = error.message;
+      })
+      /* setLike */
+      .addCase(setLike.fulfilled, (state, { payload }) => {
+        state.articles = state.articles.map((article) => {
+          if (article.slug === payload.article.slug) {
+            return {
+              ...article,
+              favorited: payload.article.favorited,
+              favoritesCount: payload.article.favoritesCount,
+            };
+          }
+          return article;
+        });
+        state.articleStatus = 'fulfilled';
+      })
+      .addCase(setLike.rejected, (state, { error }) => {
+        state.articleStatus = 'rejected';
+        state.errorMessage = error.message;
+      })
+      /* setUnlike */
+      .addCase(setUnlike.fulfilled, (state, { payload }) => {
+        state.articles = state.articles.map((article) => {
+          if (article.slug === payload.article.slug) {
+            return {
+              ...article,
+              favorited: payload.article.favorited,
+              favoritesCount: payload.article.favoritesCount,
+            };
+          }
+          return article;
+        });
+        state.articleStatus = 'fulfilled';
+      })
+      .addCase(setUnlike.rejected, (state, { error }) => {
         state.articleStatus = 'rejected';
         state.errorMessage = error.message;
       });

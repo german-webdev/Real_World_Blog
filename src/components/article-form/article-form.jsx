@@ -15,7 +15,7 @@ import classes from './article-form.module.scss';
 const ArticleForm = ({ article, formTitle, slug }) => {
   const dispatch = useDispatch();
   const { submitted } = useSelector((state) => state.settings);
-  console.log('ArticleForm', article);
+  console.debug('ArticleForm', article);
   const formik = useFormik({
     initialValues: {
       title: article?.title || '',
@@ -38,8 +38,8 @@ const ArticleForm = ({ article, formTitle, slug }) => {
       tagList: Yup.array().of(Yup.string().trim().required('tag is required')),
     }),
     onSubmit: (values) => {
-      console.log('values', values);
-      const articleData = {
+      console.debug('values', values);
+      const data = {
         article: {
           title: values.title,
           description: values.description,
@@ -48,22 +48,13 @@ const ArticleForm = ({ article, formTitle, slug }) => {
         },
       };
       if (article && slug) {
-        // const { tagList, ...otherData } = articleData;
-        dispatch(editArticle(slug, articleData));
+        dispatch(editArticle({ data, slug }));
         dispatch(checkSubmitted(true));
-        console.log('editArticle', dispatch(editArticle(slug, articleData)));
-        console.log('otherData', articleData);
-        console.log('editSlug', slug);
-        console.log('values', values);
+
       } else {
-        dispatch(createNewArticle(JSON.stringify(articleData)));
+        dispatch(createNewArticle(data));
         dispatch(checkSubmitted(true));
-        console.log('createArticle', dispatch(createNewArticle(articleData)));
-        console.log('createArticleData', articleData);
-        console.log('values', values);
       }
-      // console.log('articleData', articleData);
-      // console.log('aditSlug', slug);
     },
   });
 

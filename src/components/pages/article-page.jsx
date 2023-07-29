@@ -14,15 +14,15 @@ const ArticlePage = () => {
   const { article, articleStatus } = useSelector((state) => state.articles);
   const { auth } = useSelector((state) => state.user);
   const { submitted } = useSelector((state) => state.settings);
-  console.log('slug', slug);
+  console.debug('slug', slug);
 
   useEffect(() => {
     if (auth) {
       dispatch(fetchCurrentArticleWithAuth(slug));
-      console.log('Auth', dispatch(fetchCurrentArticleWithAuth(slug)));
+      console.debug('Auth', dispatch(fetchCurrentArticleWithAuth(slug)));
     } else {
       dispatch(fetchCurrentArticleNotAuth(slug));
-      console.log('noAuth', dispatch(fetchCurrentArticleNotAuth(slug)));
+      console.debug('noAuth', dispatch(fetchCurrentArticleNotAuth(slug)));
     }
     window.scrollTo(0, 0);
   }, [slug, auth]);
@@ -32,7 +32,7 @@ const ArticlePage = () => {
       history.push('/articles');
       dispatch(checkSubmitted(false));
     }
-  }, [articleStatus, history, dispatch]);
+  }, [articleStatus, history, dispatch, submitted]);
 
   const content = <Article {...article} />;
   const loading = articleStatus === 'loading';

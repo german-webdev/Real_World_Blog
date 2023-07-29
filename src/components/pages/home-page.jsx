@@ -8,7 +8,7 @@ import ArticleList from '../articles-list';
 import MyPagination from '../pagination';
 
 const HomePage = () => {
-  const { articles, currentPage, status } = useSelector((state) => state.articles);
+  const { articles, currentPage, articleStatus } = useSelector((state) => state.articles);
   const { auth } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -19,7 +19,8 @@ const HomePage = () => {
       dispatch(fetchArticlesNotAuth(currentPage));
     }
 
-    // console.log('data', dispatch(fetchArticlesNotAuth(currentPage)));
+    console.debug('data', dispatch(fetchArticlesNotAuth(currentPage)));
+    console.debug('dataW', dispatch(fetchArticlesWithAuth(currentPage)));
     window.scrollTo(0, 0);
   }, [currentPage, dispatch, auth]);
 
@@ -27,8 +28,8 @@ const HomePage = () => {
 
   const pagination = <MyPagination />;
 
-  const loading = status === 'loading';
-  const error = status === 'rejected';
+  const loading = articleStatus === 'loading';
+  const error = articleStatus === 'rejected';
   const hasData = !(loading || error);
 
   const viewContent = hasData ? content : null;

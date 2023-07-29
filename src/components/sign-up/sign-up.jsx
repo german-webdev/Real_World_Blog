@@ -44,7 +44,7 @@ const SignUp = () => {
     }),
     onSubmit: (values) => {
       // Обработка отправки формы
-      console.log(values);
+      console.debug(values);
       const user = {
         user: {
           username: values.username,
@@ -53,8 +53,8 @@ const SignUp = () => {
         },
       };
       dispatch(registrationUser(JSON.stringify(user)));
-      console.log(dispatch(registrationUser(user)));
-      console.log(user);
+      console.debug(dispatch(registrationUser(user)));
+      console.debug(user);
     },
   });
 

@@ -34,11 +34,11 @@ const App = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userData = JSON.parse(localStorage.getItem('user'));
-    if (token) {
+    if (token && userData) {
       dispatch(restoreUser(userData));
     }
-    if (redirect) {
-      history.replace('/articles');
+    if (redirect && auth) {
+      history.push('/articles');
       dispatch(offRedirect(false));
     }
   }, [history, auth, redirect]);
@@ -54,9 +54,9 @@ const App = () => {
         <Header />
         <main className={classes['main']}>
           <Switch>
-            <Route path="/articles" component={HomePage} exact />
-            <Route path="/sign-in" component={SignInPage} />
             <Route path="/sign-up" component={SignUpPage} />
+            <Route path="/sign-in" component={SignInPage} />
+            <Route path="/articles" component={HomePage} exact />
             <Route path="/articles/:slug/edit" component={EditArticlePage} exact />
             <Route path="/articles/:slug" component={ArticlePage} />
             <Route path="/profile" component={ProfilePage} />

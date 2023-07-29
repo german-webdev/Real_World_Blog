@@ -31,7 +31,7 @@ const Article = (props) => {
           <div className={classes['header-left__title']}>
             <Link to={`/articles/${slug}`}>{title}</Link>
             <div className={classes['like-box']}>
-              <Likes likes={favoritesCount} favorited={favorited} />
+              <Likes likes={favoritesCount} favorited={favorited} slug={slug} />
             </div>
           </div>
           <ul className={classes['header-left__tags']}>
@@ -76,7 +76,7 @@ const Article = (props) => {
                   Delete
                 </button>
               </Popconfirm>
-              {console.log('articleSlug', slug)}
+              {console.debug('articleSlug', slug)}
               <Link to={`/articles/${slug}/edit`}>
                 <button type="button" className={classes['edit']}>
                   Edit

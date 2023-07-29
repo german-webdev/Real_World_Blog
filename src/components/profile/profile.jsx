@@ -12,8 +12,8 @@ import classes from './profile.module.scss';
 const Profile = () => {
   const { username: usernameError, email: emailError, image: imageError } = useSelector((state) => state.user.errors);
   const { username, email, image, password } = useSelector((state) => state.user.user);
-  console.log('nickname', username);
-  console.log('email', username);
+  console.debug('nickname', username);
+  console.debug('email', username);
   const dispatch = useDispatch();
 
   const onError = () => {
@@ -41,7 +41,7 @@ const Profile = () => {
       image: Yup.string().url('URL format is invalid'),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      console.debug(values);
       const user = {
         user: {
           username: values.username,
@@ -51,8 +51,8 @@ const Profile = () => {
         },
       };
       dispatch(updateProfile(JSON.stringify(user)));
-      console.log(dispatch(updateProfile(user)));
-      console.log(user);
+      console.debug(dispatch(updateProfile(user)));
+      console.debug(user);
     },
   });
 

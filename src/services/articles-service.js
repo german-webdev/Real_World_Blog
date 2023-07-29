@@ -28,7 +28,15 @@ export default class ArticleService {
     return authInstance.delete(`articles/${slug}`);
   }
 
-  editArticle(slug, data) {
+  editArticle(data, slug) {
     return authInstance.put(`articles/${slug}`, data);
+  }
+
+  addLike(slug) {
+    return authInstance.post(`articles/${slug}/favorite`);
+  }
+
+  deleteLike(slug) {
+    return authInstance.delete(`articles/${slug}/favorite`);
   }
 }

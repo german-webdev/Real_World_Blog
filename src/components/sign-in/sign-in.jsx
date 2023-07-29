@@ -28,7 +28,7 @@ const SignIn = () => {
       password: Yup.string().required('password is required'),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      console.debug(values);
       const user = {
         user: {
           email: values.email,
@@ -36,8 +36,8 @@ const SignIn = () => {
         },
       };
       dispatch(loginUser(user));
-      console.log(dispatch(loginUser(user)));
-      console.log(user);
+      console.debug(dispatch(loginUser(user)));
+      console.debug(user);
     },
   });
 
