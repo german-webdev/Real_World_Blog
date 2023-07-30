@@ -11,8 +11,8 @@ const SignInPage = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (userStatus !== 'rejected' && redirect && auth) {
-      history.push('/articles');
+    if (redirect && userStatus === 'fulfilled' && auth) {
+      history.replace('/articles');
       dispatch(offRedirect(false));
     }
   }, [userStatus, history, redirect, dispatch, auth]);

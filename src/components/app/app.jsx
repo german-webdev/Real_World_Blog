@@ -37,11 +37,11 @@ const App = () => {
     if (token && userData) {
       dispatch(restoreUser(userData));
     }
-    if (redirect && auth) {
+    if (redirect) {
       history.push('/articles');
       dispatch(offRedirect(false));
     }
-  }, [history, auth, redirect]);
+  }, []);
 
   const loadingClasses = classNames(classes['wrapper'], {
     [classes['wrapper--loading']]: articleStatus === 'loading' || userStatus === 'loading',

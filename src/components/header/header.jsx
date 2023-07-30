@@ -1,8 +1,8 @@
 /* eslint-disable dot-notation */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { removeUser } from '../../store/slices/user-slice';
@@ -14,6 +14,7 @@ const Header = () => {
   const { auth } = useSelector((state) => state.user);
   const { image, username } = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [activeButton, setActiveButton] = useState(null);
 
@@ -26,6 +27,17 @@ const Header = () => {
   const handleButtonClick = (buttonClass) => {
     setActiveButton(buttonClass);
   };
+
+  useEffect(() => {
+    const { pathname } = location;
+    if (pathname === '/sign-in') {
+      setActiveButton('sign-in-btn');
+    } else if (pathname === '/sign-up') {
+      setActiveButton('sign-up-btn');
+    } else {
+      setActiveButton(null);
+    }
+  }, [location]);
 
   const generateButtonClass = (baseClass) => {
     return classNames(classes[baseClass], {
