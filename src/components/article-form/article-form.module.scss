@@ -86,6 +86,11 @@
     
             color: #BFBFBF;
           }
+
+          
+          &:focus {
+            border: 1px solid #1890FF;
+          }
         }
 
         @extend %inputs-error;
@@ -167,26 +172,53 @@
           .delete-tag {
             width: 118px;
             height: 40px;
-            padding: 6px 16px;
   
             border-radius: 4px;
             border: 1px solid  #F5222D;
+
+            background: linear-gradient(90deg, #FFFFFF 50%, #F5222D 50%);
+            background-size: 400%;
+            background-position: 0 0;
+
             color: #F5222D;
   
             &:disabled {
               opacity: 0.4;
+            }
+
+            &:hover:not(:disabled) {
+              background: linear-gradient(90deg, #FFFFFF 50%, #F5222D 50%); 
+              background-size: 400%;
+              background-position: 200px 0;
+              color: #FFFFFF;
+
+              transition: all 0.2s ease-in-out;
             }
           }
 
           .add-tag {
             width: 136px;
             height: 40px;
-            padding: 6px 16px;
-    
+
+            background: linear-gradient(90deg, #FFFFFF 50%, #1890FF 50%);
+            background-size: 400%;
+            background-position: 0 0;
+
             border-radius: 4px;
             border: 1px solid #1890FF;
     
             color: #1890FF;
+
+            transition: all 0.2s ease-in-out;
+
+            &:hover {
+              background: linear-gradient(90deg, #FFFFFF 50%, #1890FF 50%); 
+              background-size: 400%;
+              background-position: 200px 0;
+              color: #FFFFFF;
+
+              transition: all 0.2s ease-in-out;
+            }
           }
         }
 

@@ -24,7 +24,6 @@ const WithArticleFormData = (props) => {
         .max(40, 'Title must be less than 30 characters')
         .required('Title is required'),
       description: Yup.string()
-        .trim()
         .matches(
           /^[^\s]+(?:$|.*[^\s]+$)/,
           'Short description must not start, end, or consist of only whitespace characters'
@@ -33,7 +32,6 @@ const WithArticleFormData = (props) => {
         .max(60, 'Short description must be less than 60 characters')
         .required('Short description is required'),
       text: Yup.string()
-        .matches(/^\S+$/, 'Text cannot be empty')
         .min(3, 'Text must be at least 3 characters')
         .required('text is required')
         .max(3000, 'Text must be less than 3000 characters'),
