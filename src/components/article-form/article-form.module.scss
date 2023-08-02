@@ -181,6 +181,8 @@
             background-position: 0 0;
 
             color: #F5222D;
+
+            transition: all 0.2s ease-in-out;
   
             &:disabled {
               opacity: 0.4;
