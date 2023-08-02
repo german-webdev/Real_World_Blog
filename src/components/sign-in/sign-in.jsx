@@ -1,53 +1,16 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable dot-notation */
 import { Link } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { setErrors, loginUser } from '../../store/slices/user-slice';
 
 import classes from './sign-in.module.scss';
 
-const SignIn = () => {
-  const loginErrorMassage = useSelector((state) => state.user.errors);
-  const dispatch = useDispatch();
-
-  const onError = () => {
-    dispatch(setErrors(null));
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      password: Yup.string().required('password is required'),
-    }),
-    onSubmit: (values) => {
-      console.debug(values);
-      const user = {
-        user: {
-          email: values.email,
-          password: values.password,
-        },
-      };
-      dispatch(loginUser(user));
-      console.debug(dispatch(loginUser(user)));
-      console.debug(user);
-    },
-  });
-
+const SignIn = ({ formik, errors, submitted, onError }) => {
   return (
     <div className={classes['sign-in']}>
       <div className={classes['sign-in__title-container']}>
         <h2 className={classes['sign-in__title']}>Sign In</h2>
-        {Object.keys(loginErrorMassage).length > 0 && (
+        {Object.keys(errors).length > 0 && (
           <div className={classes['sign-in-error-message']}>{`"Email address or password ${Object.values(
-            loginErrorMassage
+            errors
           )}"`}</div>
         )}
       </div>
@@ -63,7 +26,7 @@ const SignIn = () => {
               formik.touched.email && formik.errors.email ? classes['inputs-error'] : ''
             }`}
             placeholder="Email address"
-            onFocus={() => onError()}
+            onFocus={onError}
           />
           {formik.touched.email && formik.errors.email && (
             <div className={classes['inputs-error-message']}>{formik.errors.email}</div>
@@ -80,7 +43,8 @@ const SignIn = () => {
             className={`${classes['password-input']} ${
               formik.touched.password && formik.errors.password ? classes['inputs-error'] : ''
             }`}
-            onFocus={() => onError()}
+            onFocus={onError}
+            autoComplete="on"
             placeholder="Password"
           />
           {formik.touched.password && formik.errors.password && (
@@ -88,7 +52,7 @@ const SignIn = () => {
           )}
         </label>
 
-        <input type="submit" name="create" className={classes['submit']} value="Login" />
+        <input type="submit" name="create" className={classes['submit']} value="Login" disabled={submitted} />
         <span className={classes['sign-up-info']}>
           Don’t have an account?{' '}
           <Link to="/sign-up" className={classes['sign-up-info__link']}>

@@ -2,62 +2,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable dot-notation */
 import { Link } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { setErrors, registrationUser } from '../../store/slices/user-slice';
 
 import classes from './sign-up.module.scss';
 
-const SignUp = () => {
-  const { username, email } = useSelector((state) => state.user.errors);
-  const dispatch = useDispatch();
-
-  const onError = () => {
-    dispatch(setErrors(null));
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      username: '',
-      email: '',
-      password: '',
-      repeatPassword: '',
-      checkbox: false,
-    },
-    validationSchema: Yup.object({
-      username: Yup.string()
-        .matches(/^[a-zA-Z0-9]+$/, 'Username can only contain letters and numbers')
-        .min(3, 'username must be at least 3 characters')
-        .max(15, 'username must be less than 15 characters')
-        .required('Username is required'),
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      password: Yup.string()
-        .min(6, 'password must be at least 6 characters')
-        .max(16, 'password must be no more than 16 characters')
-        .required('password is required'),
-      repeatPassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-        .required('Repeat Password is required'),
-      checkbox: Yup.boolean().oneOf([true], 'You must agree to the terms'),
-    }),
-    onSubmit: (values) => {
-      // Обработка отправки формы
-      console.debug(values);
-      const user = {
-        user: {
-          username: values.username,
-          email: values.email,
-          password: values.password,
-        },
-      };
-      dispatch(registrationUser(JSON.stringify(user)));
-      console.debug(dispatch(registrationUser(user)));
-      console.debug(user);
-    },
-  });
-
+const SignUp = ({ formik, username, email, submitted, onError }) => {
   return (
     <div className={classes['sign-up']}>
       <h2 className={classes['sign-up__title']}>Create new account</h2>
@@ -74,7 +22,7 @@ const SignUp = () => {
               formik.touched.username && formik.errors.username ? classes['inputs-error'] : ''
             }`}
             placeholder="Username"
-            onFocus={() => onError()}
+            onFocus={onError}
           />
           {formik.touched.username && formik.errors.username && (
             <div className={classes['inputs-error-message']}>{formik.errors.username}</div>
@@ -93,7 +41,7 @@ const SignUp = () => {
               formik.touched.email && formik.errors.email ? classes['inputs-error'] : ''
             }`}
             placeholder="Email address"
-            onFocus={() => onError()}
+            onFocus={onError}
           />
           {formik.touched.email && formik.errors.email && (
             <div className={classes['inputs-error-message']}>{formik.errors.email}</div>
@@ -111,6 +59,7 @@ const SignUp = () => {
             className={`${classes['password-input']} ${
               formik.touched.password && formik.errors.password ? classes['inputs-error'] : ''
             }`}
+            autoComplete="on"
             placeholder="Password"
           />
           {formik.touched.password && formik.errors.password && (
@@ -128,6 +77,7 @@ const SignUp = () => {
             className={`${classes['password-input']} ${
               formik.touched.repeatPassword && formik.errors.repeatPassword ? classes['inputs-error'] : ''
             }`}
+            autoComplete="on"
             placeholder="Password"
           />
           {formik.touched.repeatPassword && formik.errors.repeatPassword && (
@@ -159,7 +109,7 @@ const SignUp = () => {
           <div className={classes['inputs-error-message']}>{formik.errors.checkbox}</div>
         )}
 
-        <input type="submit" name="create" className={classes['submit']} value="Create" />
+        <input type="submit" name="create" className={classes['submit']} value="Create" disabled={submitted} />
         <span className={classes['sign-in-info']}>
           Already have an account?{' '}
           <Link to="/sign-in" className={classes['sign-in-info__link']}>

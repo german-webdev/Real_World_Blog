@@ -1,8 +1,19 @@
-.like {
-  position: relative;
-  top: 1px;
-  transform: scale(0.85);
+.like-box {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #000000;
+
+  .like {
+    position: relative;
+    top: 1px;
+    transform: scale(0.85);
+  }
 }
+
+
 
 .like-counter {
   font-size: 12px;

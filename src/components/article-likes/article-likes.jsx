@@ -10,7 +10,7 @@ const Likes = ({ likes, favorited, slug }) => {
   const { auth } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   return (
-    <>
+    <label className={classes['like-box']}>
       {favorited ? (
         <button onClick={() => auth && dispatch(setUnlike(slug))} className={classes['like']} type="button">
           <HeartFilled style={{ color: '#FF0707' }} />
@@ -22,7 +22,7 @@ const Likes = ({ likes, favorited, slug }) => {
       )}
 
       <span className={classes['like-counter']}>{likes}</span>
-    </>
+    </label>
   );
 };
 

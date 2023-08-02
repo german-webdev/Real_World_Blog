@@ -1,3 +1,3 @@
-import ArticleItem from './article-item';
+import ArticleListItem from './article-list-item';
 
-export default ArticleItem;
+export default ArticleListItem;

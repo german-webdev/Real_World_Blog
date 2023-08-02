@@ -13,7 +13,6 @@ export const registrationUser = createAsyncThunk('user/registrationUser', async 
     localStorage.setItem('token', token);
     return otherProps;
   } catch (error) {
-    console.debug(rejectWithValue(error.response.data));
     return rejectWithValue(error.response.data);
   }
 });
@@ -26,7 +25,6 @@ export const loginUser = createAsyncThunk('user/loginUser', async (data, { rejec
     localStorage.setItem('token', token);
     return otherProps;
   } catch (error) {
-    console.debug(rejectWithValue(error.response.data));
     return rejectWithValue(error.response.data);
   }
 });
@@ -39,7 +37,6 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (data,
     localStorage.setItem('token', token);
     return otherProps;
   } catch (error) {
-    console.debug(rejectWithValue(error.response.data));
     return rejectWithValue(error.response.data);
   }
 });
@@ -47,16 +44,9 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (data,
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    // user: {
-    //   username: 'UkubonaKonke3',
-    //   email: 'ukubonakonke3@gmail.com',
-    //   password: '666666',
-    //   image: null,
-    // },
     user: {
       username: null,
       email: null,
-      password: null,
       image: null,
     },
     auth: false,
@@ -73,7 +63,6 @@ const userSlice = createSlice({
     removeUser(state) {
       state.user = {};
       state.auth = false;
-      state.redirect = true;
     },
 
     offRedirect(state, { payload }) {
@@ -103,25 +92,10 @@ const userSlice = createSlice({
       .addCase(registrationUser.rejected, (state, { payload }) => {
         state.redirect = false;
         state.userStatus = 'rejected';
-        state.errors = {};
-
-        if (payload.errors) {
-          if (payload.errors.message) {
-            if (payload.errors.error && payload.errors.error.code === 11000) {
-              state.errors.username = ' is already taken.';
-            }
-          }
-          if (payload.errors.email) {
-            state.errors.email = payload.errors.email;
-          }
-          if (payload.errors['email or password']) {
-            state.errors['email or password'] = payload.errors['email or password'];
-          }
-        } else {
-          state.errors.generic = payload.message || 'An unknown error occurred';
-        }
+        state.errors = payload.errors;
         localStorage.removeItem('token');
       })
+
       /* loginUser */
       .addCase(loginUser.pending, (state) => {
         state.userStatus = 'loading';
@@ -154,18 +128,18 @@ const userSlice = createSlice({
         state.user = {
           username,
           email,
-          password: state.password,
           image: image || 'https://api.realworld.io/images/smiley-cyrus.jpeg',
         };
       })
       .addCase(updateProfile.rejected, (state, { payload }) => {
         state.userStatus = 'rejected';
         state.redirect = false;
-        state.auth = false;
         state.errors = payload.errors;
       });
   },
 });
+
+export const loginErrorMessage = (state) => state.errors;
 
 export const { setErrors, offRedirect, restoreUser, removeUser } = userSlice.actions;
 export default userSlice.reducer;

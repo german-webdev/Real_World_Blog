@@ -2,27 +2,28 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { offRedirect } from '../../store/slices/user-slice';
-import Profile from '../profile';
+import { checkSubmitted } from '../../store/slices/main-slice';
+import WithProfileData from '../hoc-components/with-profile-data';
 
 const ProfilePage = () => {
-  const { userStatus, redirect, auth } = useSelector((state) => state.user);
+  const { userStatus, auth } = useSelector((state) => state.user);
+  const { submitted } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    if (userStatus !== 'rejected' && redirect) {
+    if (userStatus === 'fulfilled' && submitted) {
       history.push('/articles');
-      dispatch(offRedirect(false));
+      dispatch(checkSubmitted(false));
     }
     if (!auth) {
       history.push('/articles');
     }
-  }, [userStatus, history, dispatch, redirect, auth]);
+  }, [userStatus, history, dispatch, submitted, auth]);
 
   return (
     <div>
-      <Profile />
+      <WithProfileData />
     </div>
   );
 };

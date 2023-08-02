@@ -79,20 +79,49 @@
           }
         }
 
+
         .profile-btn {
+          @extend %flex;
           gap: 13px;
-  
+          transition: all 0.1s ease-in-out;
+
           .avatar {
             width: 46px;
             height: 46px;
+
             border-radius: 50%;
+            outline: 1px solid transparent;
+            outline-offset: 1px;
+
+            transition: all 0.1s ease-in-out;
           }
-        }
-  
-        .create-article-btn,
-        .profile-btn,
-        .log-out-btn {
-          @extend %flex;
+
+          &:hover {
+            color: #52C41A;
+
+            .avatar {
+              outline: 1px solid #52C41A;
+              outline-offset: 5px;
+
+              transition: all 0.1s ease-in-out;
+            }
+          }
+
+          &:active {
+            .avatar {
+              outline-offset: 1px;
+              transform: scale(0.95);
+            }
+          }
+
+          &--active {
+            color: #52C41A !important;
+
+            .avatar {
+              outline: 1px solid #52C41A;
+              outline-offset: 5px;
+            }
+          }
         }
       }
 

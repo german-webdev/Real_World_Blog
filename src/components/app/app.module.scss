@@ -21,11 +21,13 @@
     3px 0 15px -10px #c3c6cc;
   opacity: 1;
 
-  transition: opacity 0.1s ease-out;
-
+  transition:
+    opacity 0.1s ease-out;
+    
   &--loading {
-    opacity: 0.2;
-    transition: opacity 0.1s ease-in;
+    opacity: 0;
+    transition: 
+      opacity 0.1s ease-in;
   }
 
   .main {

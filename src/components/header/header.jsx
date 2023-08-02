@@ -31,12 +31,15 @@ const Header = () => {
   useEffect(() => {
     const { pathname } = location;
     if (pathname === '/sign-in') {
-      setActiveButton('sign-in-btn');
-    } else if (pathname === '/sign-up') {
-      setActiveButton('sign-up-btn');
-    } else {
-      setActiveButton(null);
+      return setActiveButton('sign-in-btn');
     }
+    if (pathname === '/sign-up') {
+      return setActiveButton('sign-up-btn');
+    }
+    if (pathname === '/profile') {
+      return setActiveButton('profile-btn');
+    }
+    return setActiveButton(null);
   }, [location]);
 
   const generateButtonClass = (baseClass) => {
@@ -47,6 +50,7 @@ const Header = () => {
 
   const signInButtonClasses = generateButtonClass('sign-in-btn');
   const signUpButtonClasses = generateButtonClass('sign-up-btn');
+  const profileButtonClasses = generateButtonClass('profile-btn');
 
   return (
     <header className={classes['header']}>
@@ -96,7 +100,11 @@ const Header = () => {
               </li>
               <li>
                 <Link to="/profile">
-                  <button type="button" className={classes['profile-btn']}>
+                  <button
+                    type="button"
+                    className={profileButtonClasses}
+                    onClick={() => handleButtonClick('profile-btn')}
+                  >
                     <p className={classes['name']}>{username}</p>
                     <img className={classes['avatar']} src={image || avatar} alt="avatar" />
                   </button>

@@ -6,7 +6,9 @@ const instance = axios.create({
 });
 
 // if auth
-const authInstance = instance;
+const authInstance = axios.create({
+  baseURL: 'https://blog.kata.academy/api/',
+});
 
 const withToken = (config) => {
   config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;

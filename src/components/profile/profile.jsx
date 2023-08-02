@@ -1,61 +1,7 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable dot-notation */
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { setErrors, updateProfile } from '../../store/slices/user-slice';
-
 import classes from './profile.module.scss';
 
-const Profile = () => {
-  const { username: usernameError, email: emailError, image: imageError } = useSelector((state) => state.user.errors);
-  const { username, email, image, password } = useSelector((state) => state.user.user);
-  console.debug('nickname', username);
-  console.debug('email', username);
-  const dispatch = useDispatch();
-
-  const onError = () => {
-    dispatch(setErrors(null));
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      username,
-      email,
-      password,
-      image,
-    },
-    validationSchema: Yup.object({
-      username: Yup.string()
-        .matches(/^[a-zA-Z0-9]+$/, 'Username can only contain letters and numbers')
-        .min(3, 'username must be at least 3 characters')
-        .max(20, 'username must be less than 16 characters')
-        .required('Username cannot be empty'),
-      email: Yup.string().email('Invalid email address').required('Email cannot be empty'),
-      password: Yup.string()
-        .min(6, 'password must be at least 6 characters')
-        .max(40, 'password must be no more than 40 characters')
-        .required('New password cannot be empty'),
-      image: Yup.string().url('URL format is invalid'),
-    }),
-    onSubmit: (values) => {
-      console.debug(values);
-      const user = {
-        user: {
-          username: values.username,
-          email: values.email,
-          password: values.password,
-          image: values.image,
-        },
-      };
-      dispatch(updateProfile(JSON.stringify(user)));
-      console.debug(dispatch(updateProfile(user)));
-      console.debug(user);
-    },
-  });
-
+const Profile = ({ formik, onError, username, email, image }) => {
   return (
     <div className={classes['profile']}>
       <h2 className={classes['profile__title']}>Edit Profile</h2>
@@ -72,12 +18,12 @@ const Profile = () => {
               formik.touched.username && formik.errors.username ? classes['inputs-error'] : ''
             }`}
             placeholder="Username"
-            onFocus={() => onError()}
+            onFocus={onError}
           />
           {formik.touched.username && formik.errors.username && (
             <div className={classes['inputs-error-message']}>{formik.errors.username}</div>
           )}
-          {usernameError && <div className={classes['inputs-error-message']}>{`Username ${usernameError}`}</div>}
+          {username && <div className={classes['inputs-error-message']}>{`Username ${username}`}</div>}
         </label>
 
         <label htmlFor="email" className={classes['email-label']}>
@@ -91,12 +37,12 @@ const Profile = () => {
               formik.touched.email && formik.errors.email ? classes['inputs-error'] : ''
             }`}
             placeholder="Email address"
-            onFocus={() => onError()}
+            onFocus={onError}
           />
           {formik.touched.email && formik.errors.email && (
             <div className={classes['inputs-error-message']}>{formik.errors.email}</div>
           )}
-          {emailError && <div className={classes['inputs-error-message']}>{`Email address ${emailError}`}</div>}
+          {email && <div className={classes['inputs-error-message']}>{`Email address ${email}`}</div>}
         </label>
 
         <label htmlFor="password" className={classes['password-label']}>
@@ -109,6 +55,7 @@ const Profile = () => {
             className={`${classes['password-input']} ${
               formik.touched.password && formik.errors.password ? classes['inputs-error'] : ''
             }`}
+            autoComplete="on"
             placeholder="New password"
           />
           {formik.touched.password && formik.errors.password && (
@@ -131,7 +78,7 @@ const Profile = () => {
           {formik.touched.image && formik.errors.image && (
             <div className={classes['inputs-error-message']}>{formik.errors.image}</div>
           )}
-          {imageError && <div className={classes['inputs-error-message']}>{imageError}</div>}
+          {image && <div className={classes['inputs-error-message']}>{image}</div>}
         </label>
 
         <input type="submit" name="create" className={classes['submit']} value="Save" />

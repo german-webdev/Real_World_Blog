@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
 import { checkSubmitted } from '../../store/slices/main-slice';
-import ArticleForm from '../article-form';
+import WithArticleFormData from '../hoc-components/with-article-form-data';
 
 const EditArticlePage = () => {
   const { article, articleStatus } = useSelector((state) => state.articles);
@@ -12,7 +12,6 @@ const EditArticlePage = () => {
   const { slug } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  console.debug('EditArticlePage Slug:', slug);
 
   useEffect(() => {
     if (articleStatus === 'fulfilled' && submitted) {
@@ -25,7 +24,7 @@ const EditArticlePage = () => {
     }
   }, [articleStatus, history, dispatch, submitted, slug, auth]);
 
-  return <ArticleForm article={article} formTitle="Edit article" slug={slug} />;
+  return <WithArticleFormData article={article} formTitle="Edit article" slug={slug} submitted={submitted} />;
 };
 
 export default EditArticlePage;

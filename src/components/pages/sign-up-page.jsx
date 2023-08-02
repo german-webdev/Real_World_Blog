@@ -2,24 +2,27 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { offRedirect } from '../../store/slices/user-slice';
-import SignUp from '../sign-up';
+import { checkSubmitted } from '../../store/slices/main-slice';
+import WithSignUpData from '../hoc-components/with-sign-up-data';
 
 const SignUpPage = () => {
-  const { userStatus, redirect } = useSelector((state) => state.user);
+  const { userStatus } = useSelector((state) => state.user);
+  const { submitted } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    if (userStatus === 'fulfilled' && redirect) {
+    if (userStatus === 'fulfilled' && submitted) {
       history.push('/sign-in');
-      dispatch(offRedirect(false));
+      dispatch(checkSubmitted(false));
     }
-  }, [userStatus, history, redirect]);
+  }, [userStatus, history, submitted]);
 
-  const content = userStatus !== 'loading' ? <SignUp /> : null;
-
-  return <div>{content}</div>;
+  return (
+    <div>
+      <WithSignUpData submitted={submitted} />
+    </div>
+  );
 };
 
 export default SignUpPage;

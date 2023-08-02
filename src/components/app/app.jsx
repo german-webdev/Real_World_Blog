@@ -14,7 +14,8 @@ import SignUpPage from '../pages/sign-up-page';
 import ProfilePage from '../pages/profile-page';
 import NewArticlePage from '../pages/new-article-page';
 import EditArticlePage from '../pages/edit-article-page';
-import Preloader from '../spinner';
+import { checkOfflineStatus } from '../../store/slices/main-slice';
+import { Preloader, Offline } from '../spinners';
 
 import './reset.scss';
 import classes from './app.module.scss';
@@ -23,7 +24,12 @@ const App = () => {
   const dispatch = useDispatch();
   const { user, auth, redirect, userStatus } = useSelector((state) => state.user);
   const { articleStatus } = useSelector((state) => state.articles);
+  const { offline } = useSelector((state) => state.settings);
   const history = useHistory();
+
+  const updateOfflineStatus = () => {
+    dispatch(checkOfflineStatus(!navigator.onLine));
+  };
 
   useEffect(() => {
     if (auth) {
@@ -37,19 +43,29 @@ const App = () => {
     if (token && userData) {
       dispatch(restoreUser(userData));
     }
-    if (redirect) {
+    if (token || redirect) {
       history.push('/articles');
       dispatch(offRedirect(false));
     }
+
+    updateOfflineStatus();
+    window.addEventListener('online', updateOfflineStatus);
+    window.addEventListener('offline', updateOfflineStatus);
+
+    return () => {
+      window.removeEventListener('online', updateOfflineStatus);
+      window.removeEventListener('offline', updateOfflineStatus);
+    };
   }, []);
 
   const loadingClasses = classNames(classes['wrapper'], {
-    [classes['wrapper--loading']]: articleStatus === 'loading' || userStatus === 'loading',
+    [classes['wrapper--loading']]: articleStatus === 'loading' || userStatus === 'loading' || offline,
   });
 
   return (
     <>
       {articleStatus === 'loading' || userStatus === 'loading' ? <Preloader /> : null}
+      {offline ? <Offline /> : null}
       <div className={loadingClasses}>
         <Header />
         <main className={classes['main']}>

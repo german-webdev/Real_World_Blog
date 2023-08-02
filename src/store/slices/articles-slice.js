@@ -6,50 +6,98 @@ import { checkSubmitted } from './main-slice';
 
 const articleService = new ArticleService();
 
-export const fetchArticlesNotAuth = createAsyncThunk('articles/fetchArticlesNotAuth', async (page) => {
-  const response = await articleService.getArticlesWithoutAuth(page);
-  return response.data;
+export const fetchArticlesNotAuth = createAsyncThunk(
+  'articles/fetchArticlesNotAuth',
+  async (page, { rejectWithValue }) => {
+    try {
+      const response = await articleService.getArticlesWithoutAuth(page);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchArticlesWithAuth = createAsyncThunk(
+  'articles/fetchArticlesWithAuth',
+  async (page, { rejectWithValue }) => {
+    try {
+      const response = await articleService.getArticlesWithAuth(page);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchCurrentArticleNotAuth = createAsyncThunk(
+  'articles/fetchCurrentArticleNotAuth',
+  async (slug, { rejectWithValue }) => {
+    try {
+      const response = await articleService.getArticleWithoutAuth(slug);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchCurrentArticleWithAuth = createAsyncThunk(
+  'articles/fetchCurrentArticleWithAuth',
+  async (slug, { rejectWithValue }) => {
+    try {
+      const response = await articleService.getCurrentArticleWithAuth(slug);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const createNewArticle = createAsyncThunk('articles/createNewArticle', async (data, { rejectWithValue }) => {
+  try {
+    const response = await articleService.sendArticle(data);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
-export const fetchArticlesWithAuth = createAsyncThunk('articles/fetchArticlesWithAuth', async (page) => {
-  const response = await articleService.getArticlesWithAuth(page);
-  return response.data;
+export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (slug, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await articleService.deleteArticle(slug);
+    dispatch(checkSubmitted(true));
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
-export const fetchCurrentArticleNotAuth = createAsyncThunk('articles/fetchCurrentArticleNotAuth', async (slug) => {
-  const response = await articleService.getArticleWithoutAuth(slug);
-  return response.data;
+export const editArticle = createAsyncThunk('articles/editArticle', async ({ data, slug }, { rejectWithValue }) => {
+  try {
+    const response = await articleService.editArticle(data, slug);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
-export const fetchCurrentArticleWithAuth = createAsyncThunk('articles/fetchCurrentArticleWithAuth', async (slug) => {
-  const response = await articleService.getCurrentArticleWithAuth(slug);
-  return response.data;
+export const setLike = createAsyncThunk('articles/setLike', async (slug, { rejectWithValue }) => {
+  try {
+    const response = await articleService.addLike(slug);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
-export const createNewArticle = createAsyncThunk('articles/createNewArticle', async (data) => {
-  const response = await articleService.sendArticle(data);
-  return response.data;
-});
-
-export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (slug, { dispatch }) => {
-  const response = await articleService.deleteArticle(slug);
-  dispatch(checkSubmitted(true));
-  return response.data;
-});
-
-export const editArticle = createAsyncThunk('articles/editArticle', async ({ data, slug }) => {
-  const response = await articleService.editArticle(data, slug);
-  return response.data;
-});
-
-export const setLike = createAsyncThunk('articles/setLike', async (slug) => {
-  const response = await articleService.addLike(slug);
-  return response.data;
-});
-
-export const setUnlike = createAsyncThunk('articles/setUnlike', async (slug) => {
-  const response = await articleService.deleteLike(slug);
-  return response.data;
+export const setUnlike = createAsyncThunk('articles/setUnlike', async (slug, { rejectWithValue }) => {
+  try {
+    const response = await articleService.deleteLike(slug);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
 const setLoading = (state) => {
@@ -59,7 +107,7 @@ const setLoading = (state) => {
 
 const setError = (state, { payload }) => {
   state.articleStatus = 'rejected';
-  state.errorMessage = payload;
+  state.errorMessage = payload.message;
 };
 
 const articleSlice = createSlice({

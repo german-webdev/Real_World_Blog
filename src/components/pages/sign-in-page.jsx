@@ -2,23 +2,27 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { offRedirect } from '../../store/slices/user-slice';
-import SignIn from '../sign-in';
+import { checkSubmitted } from '../../store/slices/main-slice';
+import WithSignInData from '../hoc-components/with-sign-in-data';
 
 const SignInPage = () => {
-  const { userStatus, redirect, auth } = useSelector((state) => state.user);
+  const { userStatus, auth } = useSelector((state) => state.user);
+  const { submitted } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    if (redirect && userStatus === 'fulfilled' && auth) {
+    if (submitted && userStatus === 'fulfilled' && auth) {
       history.replace('/articles');
-      dispatch(offRedirect(false));
+      dispatch(checkSubmitted(false));
     }
-  }, [userStatus, history, redirect, dispatch, auth]);
+  }, [userStatus, history, submitted, dispatch, auth]);
 
-  const content = userStatus !== 'loading' ? <SignIn /> : null;
-  return <div>{content}</div>;
+  return (
+    <div>
+      <WithSignInData submitted={submitted} />
+    </div>
+  );
 };
 
 export default SignInPage;

@@ -32,13 +32,6 @@
         margin-bottom: 6px;
 
         color: #1890FF;
-
-        .like-box {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          color: #000000;
-        }
       }
 
       &__tags {
@@ -97,7 +90,7 @@
         .author-info {
           display: flex;
           flex-direction: column;
-          align-items: end;
+          align-items: flex-end;
 
           .author-name {
             font-family: Inter;
@@ -129,8 +122,8 @@
 
       .article-controls {
         display: flex;
-        align-items: end;
-        justify-content: end;
+        align-items: flex-end;
+        justify-content: flex-end;
         flex-grow: 1;
         gap: 12px;   
 

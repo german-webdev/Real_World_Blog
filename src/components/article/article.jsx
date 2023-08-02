@@ -1,7 +1,5 @@
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable dot-notation */
-// import { useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -10,7 +8,6 @@ import { Popconfirm } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteArticle } from '../../store/slices/articles-slice';
-// import { checkSubmitted } from '../../store/slices/main-slice';
 import Likes from '../article-likes';
 import avatar from '../../assets/default-avatar.svg';
 
@@ -30,9 +27,7 @@ const Article = (props) => {
         <div className={classes['header-left']}>
           <div className={classes['header-left__title']}>
             <Link to={`/articles/${slug}`}>{title}</Link>
-            <div className={classes['like-box']}>
-              <Likes likes={favoritesCount} favorited={favorited} slug={slug} />
-            </div>
+            <Likes likes={favoritesCount} favorited={favorited} slug={slug} />
           </div>
           <ul className={classes['header-left__tags']}>
             {tagList && tagList.length > 0 && (
@@ -76,7 +71,6 @@ const Article = (props) => {
                   Delete
                 </button>
               </Popconfirm>
-              {console.debug('articleSlug', slug)}
               <Link to={`/articles/${slug}/edit`}>
                 <button type="button" className={classes['edit']}>
                   Edit

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchArticlesNotAuth, fetchArticlesWithAuth } from '../../store/slices/articles-slice';
+import ErrorBoundary from '../error-boundary';
 import ErrorIndicator from '../error-indicator';
 import ArticleList from '../articles-list';
 import MyPagination from '../pagination';
@@ -18,9 +19,6 @@ const HomePage = () => {
     } else {
       dispatch(fetchArticlesNotAuth(currentPage));
     }
-
-    console.debug('data', dispatch(fetchArticlesNotAuth(currentPage)));
-    console.debug('dataW', dispatch(fetchArticlesWithAuth(currentPage)));
     window.scrollTo(0, 0);
   }, [currentPage, dispatch, auth]);
 
@@ -34,14 +32,14 @@ const HomePage = () => {
 
   const viewContent = hasData ? content : null;
   const viewPagination = hasData && articles.length ? pagination : null;
-  const errorMassage = error ? ErrorIndicator : null;
+  const errorMassage = error ? <ErrorIndicator /> : null;
 
   return (
-    <>
+    <ErrorBoundary>
       {viewContent}
       {viewPagination}
       {errorMassage}
-    </>
+    </ErrorBoundary>
   );
 };
 
