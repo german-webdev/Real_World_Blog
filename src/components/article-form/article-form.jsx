@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable dot-notation */
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import classes from './article-form.module.scss';
@@ -135,6 +136,26 @@ const ArticleForm = ({ formTitle, formik, submitted }) => {
       </form>
     </div>
   );
+};
+
+ArticleForm.propTypes = {
+  formTitle: PropTypes.string.isRequired,
+  formik: PropTypes.shape({
+    getFieldProps: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    values: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }).isRequired,
+  }).isRequired,
+  submitted: PropTypes.bool,
+};
+
+ArticleForm.defaultProps = {
+  submitted: false,
 };
 
 export default ArticleForm;

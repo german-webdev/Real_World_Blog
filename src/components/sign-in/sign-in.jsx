@@ -1,4 +1,5 @@
 /* eslint-disable dot-notation */
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import classes from './sign-in.module.scss';
@@ -62,6 +63,26 @@ const SignIn = ({ formik, errors, submitted, onError }) => {
       </form>
     </div>
   );
+};
+
+SignIn.defaultProps = {
+  errors: {},
+  onError: () => {},
+};
+
+SignIn.propTypes = {
+  formik: PropTypes.shape({
+    getFieldProps: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    initialValues: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+    }).isRequired,
+    onSubmit: PropTypes.func,
+  }).isRequired,
+  errors: PropTypes.shape({}),
+  submitted: PropTypes.bool.isRequired,
+  onError: PropTypes.func,
 };
 
 export default SignIn;

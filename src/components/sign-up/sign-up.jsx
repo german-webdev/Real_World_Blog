@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable dot-notation */
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import classes from './sign-up.module.scss';
@@ -119,6 +120,31 @@ const SignUp = ({ formik, username, email, submitted, onError }) => {
       </form>
     </div>
   );
+};
+
+SignUp.defaultProps = {
+  username: '',
+  email: '',
+  submitted: false,
+  onError: () => {},
+};
+
+SignUp.propTypes = {
+  formik: PropTypes.shape({
+    getFieldProps: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    initialValues: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+      repeatPassword: PropTypes.string.isRequired,
+      checkbox: PropTypes.bool.isRequired,
+    }).isRequired,
+  }).isRequired,
+  username: PropTypes.string,
+  email: PropTypes.string,
+  submitted: PropTypes.bool,
+  onError: PropTypes.func,
 };
 
 export default SignUp;

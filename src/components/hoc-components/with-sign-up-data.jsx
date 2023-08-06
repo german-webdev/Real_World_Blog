@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -52,6 +53,16 @@ const WithSignUpData = (props) => {
   const onError = () => dispatch(setErrors(null));
 
   return <SignUp formik={signUpFormik} onError={onError} {...errors} {...props} />;
+};
+
+WithSignUpData.defaultProps = {
+  errors: {},
+  onError: () => {},
+};
+
+WithSignUpData.propTypes = {
+  errors: PropTypes.shape({}),
+  onError: PropTypes.func,
 };
 
 export default WithSignUpData;

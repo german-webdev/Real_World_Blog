@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable dot-notation */
+import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -87,6 +89,40 @@ const Article = (props) => {
       )}
     </div>
   );
+};
+
+Article.defaultProps = {
+  author: {
+    username: 'Unknown Author',
+    image: avatar,
+    following: false,
+  },
+  tagList: [],
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  description: '',
+  favorited: false,
+  favoritesCount: 0,
+  title: '',
+  body: '',
+  slug: '',
+};
+
+Article.propTypes = {
+  author: PropTypes.shape({
+    username: PropTypes.string,
+    image: PropTypes.string,
+    following: PropTypes.bool,
+  }),
+  createdAt: PropTypes.string,
+  updatedAt: PropTypes.string,
+  description: PropTypes.string,
+  favorited: PropTypes.bool,
+  favoritesCount: PropTypes.number,
+  tagList: PropTypes.arrayOf(PropTypes.string),
+  title: PropTypes.string,
+  body: PropTypes.string,
+  slug: PropTypes.string,
 };
 
 export default Article;

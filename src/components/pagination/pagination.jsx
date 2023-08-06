@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable dot-notation */
 import { Pagination } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';

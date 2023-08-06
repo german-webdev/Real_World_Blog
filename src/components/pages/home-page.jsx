@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable dot-notation */
 import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchArticlesNotAuth, fetchArticlesWithAuth } from '../../store/slices/articles-slice';
@@ -41,6 +43,31 @@ const HomePage = () => {
       {errorMassage}
     </ErrorBoundary>
   );
+};
+
+HomePage.defaultProps = {
+  articles: [],
+};
+
+HomePage.propTypes = {
+  articles: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string,
+      title: PropTypes.string,
+      description: PropTypes.string,
+      body: PropTypes.string,
+      createdAt: PropTypes.string,
+      updatedAt: PropTypes.string,
+      tagList: PropTypes.arrayOf(PropTypes.string),
+      favorited: PropTypes.bool,
+      favoritesCount: PropTypes.number,
+      author: PropTypes.shape({
+        username: PropTypes.string,
+        image: PropTypes.string,
+        following: PropTypes.bool,
+      }),
+    })
+  ),
 };
 
 export default HomePage;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -57,6 +58,30 @@ const WithArticleFormData = (props) => {
   });
 
   return <ArticleForm formik={articleFormik} {...otherProps} />;
+};
+
+WithArticleFormData.propTypes = {
+  article: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+    tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
+    favorited: PropTypes.bool.isRequired,
+    favoritesCount: PropTypes.number.isRequired,
+    author: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      following: PropTypes.bool.isRequired,
+    }).isRequired,
+  }),
+  slug: PropTypes.string.isRequired,
+};
+
+WithArticleFormData.defaultProps = {
+  article: null,
 };
 
 export default WithArticleFormData;

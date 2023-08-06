@@ -1,4 +1,5 @@
 /* eslint-disable dot-notation */
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 
@@ -24,6 +25,18 @@ const Likes = ({ likes, favorited, slug }) => {
       <span className={classes['like-counter']}>{likes}</span>
     </label>
   );
+};
+
+Likes.defaultProps = {
+  likes: 0,
+  favorited: false,
+  slug: '',
+};
+
+Likes.propTypes = {
+  likes: PropTypes.number,
+  favorited: PropTypes.bool,
+  slug: PropTypes.string,
 };
 
 export default Likes;

@@ -1,4 +1,6 @@
 /* eslint-disable dot-notation */
+import PropTypes from 'prop-types';
+
 import classes from './profile.module.scss';
 
 const Profile = ({ formik, onError, username, email, image }) => {
@@ -85,6 +87,31 @@ const Profile = ({ formik, onError, username, email, image }) => {
       </form>
     </div>
   );
+};
+
+Profile.defaultProps = {
+  errors: {},
+  onError: () => {},
+};
+
+Profile.propTypes = {
+  formik: PropTypes.shape({
+    getFieldProps: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    initialValues: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  submitted: PropTypes.bool.isRequired,
+  onError: PropTypes.func,
+  errors: PropTypes.shape({
+    username: PropTypes.string,
+    email: PropTypes.string,
+    image: PropTypes.string,
+  }),
 };
 
 export default Profile;

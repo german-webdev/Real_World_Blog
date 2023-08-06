@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -51,6 +52,24 @@ const WithProfileData = () => {
   const onError = () => dispatch(setErrors(null));
 
   return <Profile formik={profileFormik} submitted={submitted} onError={onError} {...errors} />;
+};
+
+WithProfileData.defaultProps = {
+  username: '',
+  image: '',
+  email: '',
+  errors: {},
+  onError: () => {},
+  submitted: false,
+};
+
+WithProfileData.propTypes = {
+  errors: PropTypes.shape({}),
+  username: PropTypes.string,
+  email: PropTypes.string,
+  image: PropTypes.string,
+  submitted: PropTypes.bool,
+  onError: PropTypes.func,
 };
 
 export default WithProfileData;
